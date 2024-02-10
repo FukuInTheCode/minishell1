@@ -20,6 +20,8 @@
     #include <stdbool.h>
     #include <string.h>
 
+size_t my_strlen(char const *);
+
 int my_shell(void);
 
 #endif
