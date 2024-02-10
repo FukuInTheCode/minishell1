@@ -20,4 +20,6 @@
     #include <stdbool.h>
     #include <string.h>
 
+int my_shell(void);
+
 #endif
