@@ -18,5 +18,6 @@
     #include <stdlib.h>
     #include <signal.h>
     #include <stdbool.h>
+    #include <string.h>
 
 #endif
