@@ -9,7 +9,7 @@
 
 char *my_memset(char *buf, char c, size_t buf_len)
 {
-    for (int i = 0; i < buf_len, i++)
+    for (int i = 0; i < buf_len; i++)
         buf[i] = c;
     return buf;
 }

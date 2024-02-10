@@ -15,7 +15,7 @@ int my_shell(void)
         write(1, "$> ", 3);
         len = read(0, buf, 1000);
         write(1, "\n", 1);
-        write(1, buf, len;
+        write(1, buf, len);
         my_memset(buf, 0, len);
     }
     return 0;
