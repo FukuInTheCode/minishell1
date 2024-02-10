@@ -21,6 +21,7 @@
     #include <string.h>
 
 size_t my_strlen(char const *);
+char *my_memset(char *, char, size_t buf_len);
 
 int my_shell(void);
 
