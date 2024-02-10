@@ -9,11 +9,13 @@
 
 char *my_strcat(char *dest, char const *src)
 {
+    char *return_ptr = dest;
+
     for (; *dest; dest++);
-    for (; *src; src++) {
-        *dest = *src;
+    for (int i = 0; src[i]; i++) {
+        *dest = src[i];
         dest++;
     }
     *dest = 0;
-    return dest;
+    return return_ptr;
 }
