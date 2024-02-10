@@ -14,8 +14,10 @@ int my_shell(void)
     for (int len = 0;true;) {
         write(1, "$> ", 3);
         len = read(0, buf, 1000);
-        write(1, "\n", 1);
-        write(1, buf, len);
+        buf[len - 1] = 0;
+        len--;
+        if (cmd_exist(buf))
+            write(1, "cmd exist\n", 10);
         my_memset(buf, 0, len);
     }
     return 0;
