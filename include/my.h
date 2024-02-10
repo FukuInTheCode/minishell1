@@ -22,6 +22,7 @@
 
 size_t my_strlen(char const *);
 char *my_memset(char *, char, size_t buf_len);
+char *my_strcat(char *, char const *);
 
 int my_shell(void);
 
