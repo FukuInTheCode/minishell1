@@ -31,7 +31,7 @@ char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
 
 char *my_getenv(char const *);
-bool cmd_exist(char const *);
+bool cmd_exist(char const *, char []);
 int my_shell(void);
 
 #endif

@@ -7,7 +7,26 @@
 
 #include "my.h"
 
-bool cmd_exist(char const *cmd)
+static int get_access(char const *cmd, char const *tok, char const *cdir)
+{
+    int ret = 0;
+
+    chdir(tok);
+    ret = access(cmd, F_OK);
+    chdir(cdir);
+    return ret;
+}
+
+static char *get_cmd_path(char buf[], char const *cmd, char const *tok)
+{
+    my_strcat(buf, tok);
+    if (buf[my_strlen(buf) - 1] != '/')
+        my_strcat(buf, "/");
+    my_strcat(buf, cmd);
+    return buf;
+}
+
+bool cmd_exist(char const *cmd, char buf[])
 {
     char *path_value = my_getenv("PATH");
     char current_dir[1001] = {0};
@@ -18,11 +37,10 @@ bool cmd_exist(char const *cmd)
     getcwd(current_dir, 1000);
     path_value = my_strdup(path_value);
     for (char *tok = strtok(path_value, ":"); tok; tok = strtok(NULL, ":")) {
-        chdir(tok);
-        is_ok = access(cmd, F_OK);
-        chdir(current_dir);
+        is_ok = get_access(cmd, tok, current_dir);
         if (is_ok)
             continue;
+        get_cmd_path(buf, cmd, tok);
         free(path_value);
         return true;
     }

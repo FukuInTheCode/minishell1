@@ -10,15 +10,16 @@
 int my_shell(void)
 {
     char buf[1001] = {0};
+    char cmd_buf[1001] = {0};
 
     for (int len = 0;true;) {
         write(1, "$> ", 3);
-        len = read(0, buf, 1000);
-        buf[len - 1] = 0;
-        len--;
-        if (cmd_exist(buf))
-            write(1, "cmd exist\n", 10);
+        len = read(0, buf, 1000) - 1;
+        buf[len] = 0;
+        if (cmd_exist(buf, cmd_buf))
+            write(1, cmd_buf, my_strlen(cmd_buf)) && write(1, "\n", 1);
         my_memset(buf, 0, len);
+        my_memset(cmd_buf, 0, my_strlen(cmd_buf));
     }
     return 0;
 }
