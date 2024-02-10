@@ -27,6 +27,8 @@ int my_shell(void)
     for (int len = 0;true;) {
         write(1, "$> ", 3);
         len = read(0, buf, 1000) - 1;
+        if (!my_strncmp(buf, "exit", 4) || len < 0)
+            break;
         buf[len] = 0;
         if (cmd_exist(buf, cmd_buf))
             error |= run_cmd(cmd_buf, buf);
