@@ -24,5 +24,7 @@ int cmd_exec(char *cmd_buf, char *argv[])
         return run_cmd(cmd_buf, argv);
     if (cmd_is_script(*argv))
         return run_cmd(*argv, argv);
+    if (!my_strcmp(*argv, "cd"))
+        return my_cd(argv);
     return 127;
 }
