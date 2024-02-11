@@ -30,8 +30,10 @@ int my_strncmp(char const *, char const *, int);
 char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
 
+
 char *my_getenv(char const *);
-bool cmd_exist(char const *, char []);
+bool cmd_exist(char const *, char[]);
+char **cmd_argv(char *, char *[]);
 int my_shell(void);
 
 #endif
