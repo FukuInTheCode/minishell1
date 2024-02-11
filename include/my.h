@@ -39,6 +39,7 @@ bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
 
 int my_cd(char *[]);
+int my_env(char *[]);
 
 int my_shell(void);
 
