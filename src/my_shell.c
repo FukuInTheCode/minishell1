@@ -16,17 +16,6 @@ static char **reset_argv(char *argv[])
     return argv;
 }
 
-static int run_cmd(char const *cmd_buf, char *argv[])
-{
-    int status = 0;
-    pid_t pid = fork();
-
-    if (pid == 0)
-        return execve(cmd_buf, argv, NULL);
-    waitpid(pid, &status, 0);
-    return status;
-}
-
 int my_shell(void)
 {
     char buf[1001] = {0};
@@ -41,8 +30,7 @@ int my_shell(void)
             break;
         buf[len] = 0;
         cmd_argv(buf, argv);
-        if (cmd_exist(*argv, cmd_buf))
-            error |= run_cmd(cmd_buf, argv);
+        error = cmd_exec(cmd_buf, argv);
         my_memset(buf, 0, len), my_memset(cmd_buf, 0, my_strlen(cmd_buf));
         reset_argv(argv);
     }

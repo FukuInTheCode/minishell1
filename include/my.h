@@ -21,6 +21,7 @@
     #include <string.h>
     #include <sys/types.h>
     #include <sys/stat.h>
+    #include <sys/wait.h>
     #include <fcntl.h>
 
 size_t my_strlen(char const *);
@@ -30,9 +31,10 @@ int my_strncmp(char const *, char const *, int);
 char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
 
-
+int cmd_exec(char *, char *[]);
 char *my_getenv(char const *);
 bool cmd_exist(char const *, char[]);
+bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
 int my_shell(void);
 
