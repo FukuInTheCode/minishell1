@@ -41,9 +41,7 @@ bool cmd_exist(char const *cmd, char buf[])
         if (is_ok)
             continue;
         get_cmd_path(buf, cmd, tok);
-        free(path_value);
-        return true;
+        return free(path_value), true;
     }
-    free(path_value);
-    return false;
+    return free(path_value), false;
 }
