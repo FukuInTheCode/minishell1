@@ -16,17 +16,6 @@ static char **reset_argv(char *argv[])
     return argv;
 }
 
-static int run_cmd(char const *cmd_buf, char *argv[])
-{
-    int status = 0;
-    pid_t pid = fork();
-
-    if (pid == 0)
-        return execve(cmd_buf, argv, NULL);
-    waitpid(pid, &status, 0);
-    return status;
-}
-
 int my_shell(void)
 {
     char buf[1001] = {0};
