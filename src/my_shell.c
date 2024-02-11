@@ -30,7 +30,7 @@ int my_shell(void)
             break;
         buf[len] = 0;
         cmd_argv(buf, argv);
-        error = cmd_run(cmd_buf, argv);
+        error = cmd_exec(cmd_buf, argv);
         my_memset(buf, 0, len), my_memset(cmd_buf, 0, my_strlen(cmd_buf));
         reset_argv(argv);
     }

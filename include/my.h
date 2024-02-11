@@ -31,7 +31,7 @@ int my_strncmp(char const *, char const *, int);
 char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
 
-
+int cmd_exec(char *, char *[]);
 char *my_getenv(char const *);
 bool cmd_exist(char const *, char[]);
 char **cmd_argv(char *, char *[]);
