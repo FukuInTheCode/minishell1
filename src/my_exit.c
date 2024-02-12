@@ -11,10 +11,14 @@ bool do_exit(char *argv[], int *ret)
 {
     int i = 0;
 
+    if (my_strcmp("exit", *argv))
+        return false;
     if (!argv[1])
         return true;
-    if (argv[2])
+    if (argv[2]) {
+        *ret = 1;
         return false;
+    }
     for (; argv[1][i] && ('0' <= argv[1][i] && argv[1][i] <= '9'); i++);
     if (argv[1][i])
         return false;
