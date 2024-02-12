@@ -22,6 +22,6 @@ int my_cd(char *argv[])
     lstat(path, &s);
     if (!S_ISDIR(s.st_mode))
         return 1;
-    chdir(argv[1]);
+    chdir(path);
     return 0;
 }
