@@ -18,21 +18,23 @@ static char **reset_argv(char *argv[])
 
 int my_shell(void)
 {
-    char buf[1001] = {0};
+    char *buf = NULL;
     char cmd_buf[1001] = {0};
     int error = 0;
     char *argv[1001] = {0};
+    size_t n = 0;
 
     for (int len = 0;true;) {
         write(1, "$> ", 3);
-        len = read(0, buf, 1000) - 1;
-        if (!my_strncmp(buf, "exit", 4) || len < 0)
+        len = getline(&buf, &n, stdin);
+        if (len < 0 || !my_strncmp(buf, "exit", 4))
             break;
-        buf[len] = 0;
+        buf[len - 1] = 0;
         cmd_argv(buf, argv);
         error = cmd_exec(cmd_buf, argv);
-        my_memset(buf, 0, len), my_memset(cmd_buf, 0, my_strlen(cmd_buf));
+        my_memset(cmd_buf, 0, my_strlen(cmd_buf));
         reset_argv(argv);
     }
+    free(buf);
     return error;
 }
