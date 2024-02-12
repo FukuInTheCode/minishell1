@@ -26,10 +26,13 @@ int my_unsetenv(char const *name)
 
     if (!new_env || !name)
         return 84;
-    for (int i = 0; i < env_size; i++) {
+    for (int i = 0; environ[i]; i++) {
+        new_env[j] = NULL;
         if (!my_strncmp(environ[i], name, my_strlen(name)))
-            new_env[i] = environ[j];
+            continue;
+        new_env[j] = environ[i];
         j++;
     }
+    environ = new_env;
     return 0;
 }
