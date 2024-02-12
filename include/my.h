@@ -31,12 +31,14 @@ int my_strncmp(char const *, char const *, int);
 int my_strcmp(char const *, char const *);
 char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
+int my_getnbr(char const *);
 
 int cmd_exec(char *, char *[]);
 char *my_getenv(char const *);
 bool cmd_exist(char const *, char[]);
 bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
+bool do_exit(char *[], int *);
 
 int my_cd(char *[]);
 int my_env(char *[]);
