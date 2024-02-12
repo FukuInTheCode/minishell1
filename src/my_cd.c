@@ -10,10 +10,16 @@
 int my_cd(char *argv[])
 {
     struct stat s;
+    char *path = NULL;
 
-    if (!argv[1] || argv[2])
+    path = argv[1];
+    if (!argv[1] || !my_strcmp("~", argv[1]))
+        path = my_getenv("HOME");
+    if (argv[1] && !my_strcmp("-", argv[1]))
+        path = my_getenv("OLDPWD");
+    if (!path)
         return 1;
-    lstat(argv[1], &s);
+    lstat(path, &s);
     if (!S_ISDIR(s.st_mode))
         return 1;
     chdir(argv[1]);
