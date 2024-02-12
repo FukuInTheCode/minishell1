@@ -26,6 +26,8 @@ static char *get_cmd_path(char buf[], char const *cmd, char const *tok)
     return buf;
 }
 
+
+
 bool cmd_exist(char const *cmd, char buf[])
 {
     char *path_value = my_getenv("PATH");
@@ -35,6 +37,8 @@ bool cmd_exist(char const *cmd, char buf[])
     if (!path_value)
         return false;
     getcwd(current_dir, 1000);
+    if (*cmd == '/' && !get_access(cmd + 1, "/", current_dir))
+        return get_cmd_path(buf, cmd + 1, "/"), true;
     path_value = my_strdup(path_value);
     for (char *tok = strtok(path_value, ":"); tok; tok = strtok(NULL, ":")) {
         is_ok = get_access(cmd, tok, current_dir);
