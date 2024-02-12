@@ -21,21 +21,21 @@ static size_t get_env_size(void)
 static int add_env(char const *var, char const *value)
 {
     size_t env_len = get_env_size() + 2;
-    char **new_env = malloc(sizeof(char *) * env_size);
+    char **new_env = malloc(sizeof(char *) * env_len);
     int i = 0;
 
     if (!new_env)
         return 84;
-    for (; i < get_env_size; i++)
+    for (; environ[i]; i++)
         new_env[i] = environ[i];
     new_env[i] = malloc(my_strlen(var) + my_strlen(value) + 2);
-    if (new_env[i])
+    if (!new_env[i])
         return 84;
     my_memset(new_env[i], 0, my_strlen(var) + my_strlen(value) + 2);
-    i++;
     my_strcat(new_env[i], var);
     my_strcat(new_env[i], "=");
     my_strcat(new_env[i], value);
+    new_env[i + 1] = NULL;
     environ = new_env;
     return 0;
 }
@@ -47,10 +47,11 @@ static int change_env(char const *var, char const *value)
 
     if (!new_env)
         return 84;
-    for (int i = 0; i < env_size; i++) {
+    for (int i = 0; i < env_size - 1; i++) {
         new_env[i] = NULL;
         new_env[i] = environ[i];
-        if (my_strncmp(environ[i], var, my_strlen(var)))
+        if (my_strncmp(environ[i], var, my_strlen(var)) ||
+            environ[i][my_strlen(var)] != '=')
             continue;
         new_env[i] = malloc(my_strlen(var) + my_strlen(value) + 2);
         if (!new_env[i])
@@ -59,7 +60,6 @@ static int change_env(char const *var, char const *value)
         my_strcat(new_env[i], var);
         my_strcat(new_env[i], "=");
         my_strcat(new_env[i], value);
-
     }
     new_env[env_size - 1] = NULL;
     environ = new_env;
@@ -73,7 +73,8 @@ int my_setenv(char const *var, char const *value)
     if (!var || !value)
         return 84;
     for (int i = 0; environ[i]; i++)
-        if (my_strncmp(environ[i], var, my_strlen(var)))
+        if (!my_strncmp(environ[i], var, my_strlen(var)) &&
+            environ[i][my_strlen(var)] == '=')
             is_inside = true;
     if (is_inside)
         return change_env(var, value);
