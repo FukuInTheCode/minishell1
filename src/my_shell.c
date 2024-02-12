@@ -16,21 +16,29 @@ static char **reset_argv(char *argv[])
     return argv;
 }
 
+static int get_input(char **buf, size_t n, int len)
+{
+    write(1, "$> ", 3);
+    len = getline(buf, &n, stdin);
+    if (len < 0)
+        return 1;
+    (*buf)[len - 1] = 0;
+    return 0;
+}
+
 int my_shell(void)
 {
     char *buf = NULL;
     char cmd_buf[1001] = {0};
     int error = 0;
     char *argv[1001] = {0};
-    size_t n = 0;
 
-    for (int len = 0;true;) {
-        write(1, "$> ", 3);
-        len = getline(&buf, &n, stdin);
-        if (len < 0 || !my_strncmp(buf, "exit", 4))
+    for (; true;) {
+        if (get_input(&buf, 0, 0))
             break;
-        buf[len - 1] = 0;
         cmd_argv(buf, argv);
+        if (do_exit(argv, &error))
+            break;
         error = cmd_exec(cmd_buf, argv);
         my_memset(cmd_buf, 0, my_strlen(cmd_buf));
         reset_argv(argv);
