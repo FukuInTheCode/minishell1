@@ -36,6 +36,8 @@ int my_shell(void)
     for (; true;) {
         if (get_input(&buf, 0, 0))
             break;
+        if (!*buf)
+            continue;
         cmd_argv(buf, argv);
         if (do_exit(argv, &error))
             break;
