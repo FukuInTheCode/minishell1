@@ -24,7 +24,7 @@ int my_unsetenv(char const *name)
     char **new_env = malloc(sizeof(char *) * env_size);
     int j = 0;
 
-    if (!new_env)
+    if (!new_env || !name)
         return 84;
     for (int i = 0; i < env_size; i++) {
         if (!my_strncmp(environ[i], name, my_strlen(name)))
