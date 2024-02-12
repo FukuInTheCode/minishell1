@@ -11,6 +11,7 @@ int my_cd(char *argv[])
 {
     struct stat s;
     char *path = NULL;
+    char buf[1001] = {0};
 
     path = argv[1];
     if (!argv[1] || !my_strcmp("~", argv[1]))
@@ -22,6 +23,9 @@ int my_cd(char *argv[])
     lstat(path, &s);
     if (!S_ISDIR(s.st_mode))
         return 1;
+    my_setenv("OLDPWD", my_getenv("PWD"));
     chdir(path);
+    getcwd(buf, 1000);
+    my_setenv("PWD", buf);
     return 0;
 }
