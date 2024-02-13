@@ -15,6 +15,9 @@ static int run_cmd(char const *cmd_buf, char *argv[])
     if (pid == 0)
         return execve(cmd_buf, argv, NULL);
     waitpid(pid, &status, 0);
+    status = status >> 8 * (status > 255);
+    if (status == 139)
+        write(2, "Segmentation fault (core dumped)\n", 34);
     return status;
 }
 
