@@ -32,5 +32,8 @@ int cmd_exec(char *cmd_buf, char *argv[])
         return run_cmd(cmd_buf, argv);
     if (cmd_is_script(*argv))
         return run_cmd(*argv, argv);
+    write(2, "\n", 1);
+    write(2, *argv, my_strlen(*argv));
+    write(2, ": Command not found.\n", 21);
     return 1;
 }

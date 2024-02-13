@@ -12,5 +12,5 @@ int main(int argc, char **argv, char **envp)
     int return_value = 0;
 
     return_value = my_shell();
-    return return_value;
+    return WEXITSTATUS(return_value);
 }
