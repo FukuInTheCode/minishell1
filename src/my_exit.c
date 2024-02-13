@@ -13,8 +13,11 @@ bool do_exit(char *argv[], int *ret)
 
     if (my_strcmp("exit", *argv))
         return false;
-    if (!argv[1])
+    if (!argv[1]) {
+        *ret = 0;
+        write(1, "exit\n", 5);
         return true;
+    }
     if (argv[2]) {
         *ret = 1;
         return false;
@@ -23,5 +26,6 @@ bool do_exit(char *argv[], int *ret)
     if (argv[1][i])
         return false;
     *ret = my_getnbr(argv[1]);
+    write(1, "exit\n", 5);
     return true;
 }
