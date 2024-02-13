@@ -13,8 +13,10 @@ bool do_exit(char *argv[], int *ret)
 
     if (my_strcmp("exit", *argv))
         return false;
-    if (!argv[1])
+    if (!argv[1]) {
+        *ret = 0;
         return true;
+    }
     if (argv[2]) {
         *ret = 1;
         return false;
