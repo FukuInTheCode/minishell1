@@ -26,8 +26,6 @@ static char *get_cmd_path(char buf[], char const *cmd, char const *tok)
     return buf;
 }
 
-
-
 bool cmd_exist(char const *cmd, char buf[])
 {
     char *path_value = my_getenv("PATH");
