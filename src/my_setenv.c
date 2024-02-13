@@ -48,7 +48,6 @@ static int change_env(char const *var, char const *value)
     if (!new_env)
         return 84;
     for (int i = 0; i < env_size - 1; i++) {
-        new_env[i] = NULL;
         new_env[i] = environ[i];
         if (my_strncmp(environ[i], var, my_strlen(var)) ||
             environ[i][my_strlen(var)] != '=')
@@ -58,8 +57,7 @@ static int change_env(char const *var, char const *value)
             return 84;
         my_memset(new_env[i], 0, my_strlen(var) + my_strlen(value) + 2);
         my_strcat(new_env[i], var);
-        my_strcat(new_env[i], "=");
-        my_strcat(new_env[i], value);
+        my_strcat(new_env[i], "="), my_strcat(new_env[i], value);
     }
     new_env[env_size - 1] = NULL;
     environ = new_env;
