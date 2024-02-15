@@ -39,9 +39,10 @@ bool cmd_exist(char const *, char[]);
 bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
 bool do_exit(char *[], int *);
+char **my_env_cp(char **, uint8_t);
 
 int my_cd(char *[]);
-int my_env(char *[]);
+int my_env(char *[], char ***);
 int my_unsetenv(char const *);
 int my_setenv(char const *, char const *);
 
