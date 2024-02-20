@@ -7,13 +7,13 @@
 
 #include "my.h"
 
-static int run_cmd(char const *cmd_buf, char *argv[])
+static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
 {
     int status = 0;
     pid_t pid = fork();
 
     if (pid == 0)
-        return execve(cmd_buf, argv, NULL);
+        return execve(cmd_buf, argv, envp);
     waitpid(pid, &status, 0);
     status = status >> 8 * (status > 255);
     if (status == 139)
