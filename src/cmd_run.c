@@ -21,20 +21,20 @@ static int run_cmd(char const *cmd_buf, char *argv[])
     return status;
 }
 
-int cmd_exec(char *cmd_buf, char *argv[])
+int cmd_exec(char *cmd_buf, char *argv[], char ***envp)
 {
     if (!my_strcmp(*argv, "cd"))
-        return my_cd(argv);
+        return my_cd(argv, *envp);
     if (!my_strcmp(*argv, "env"))
-        return my_env(argv);
+        return my_env(argv, *envp);
     if (!my_strcmp(*argv, "unsetenv"))
-        return my_unsetenv(argv[1]);
+        return my_unsetenv(argv[1], envp);
     if (!my_strcmp(*argv, "setenv") && argv[1])
-        return my_setenv(argv[1], argv[2]);
+        return my_setenv(argv[1], argv[2], envp);
     if (cmd_exist(*argv, cmd_buf))
-        return run_cmd(cmd_buf, argv);
+        return run_cmd(cmd_buf, argv, *envp);
     if (cmd_is_script(*argv))
-        return run_cmd(*argv, argv);
+        return run_cmd(*argv, argv, *envp);
     write(2, "\n", 1);
     write(2, *argv, my_strlen(*argv));
     write(2, ": Command not found.\n", 21);
