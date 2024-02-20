@@ -24,5 +24,5 @@ char **my_env_cp(char **envp, uint8_t malloc_more)
         new_envp[i] = NULL;
     for (int i = 0; envp[i]; i++)
         new_envp[i] = new_envp[i];
-    return env;
+    return new_envp;
 }
