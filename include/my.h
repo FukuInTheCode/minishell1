@@ -46,6 +46,6 @@ int my_env(char *[], char ***);
 int my_unsetenv(char const *);
 int my_setenv(char const *, char const *);
 
-int my_shell(void);
+int my_shell(char ***);
 
 #endif
