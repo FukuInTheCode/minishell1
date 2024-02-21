@@ -41,9 +41,9 @@ char **cmd_argv(char *, char *[]);
 bool do_exit(char *[], int *);
 char **my_env_cp(char **, uint8_t);
 
-int my_cd(char *[], char **);
+int my_cd(char *[], char ***);
 int my_env(char *[], char **);
-int my_unsetenv(char const *);
+int my_unsetenv(char const *, char ***);
 int my_setenv(char const *, char const *);
 
 int my_shell(char ***);
