@@ -44,7 +44,7 @@ char **my_env_cp(char **, uint8_t);
 int my_cd(char *[], char ***);
 int my_env(char *[], char **);
 int my_unsetenv(char const *, char ***);
-int my_setenv(char const *, char const *);
+int my_setenv(char const *, char const *, char ***);
 
 int my_shell(char ***);
 
