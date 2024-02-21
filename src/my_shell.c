@@ -18,7 +18,8 @@ static char **reset_argv(char *argv[])
 
 static int get_input(char **buf, size_t n, int len)
 {
-    write(1, "$> ", 3);
+    if (isatty(0))
+        write(1, "$> ", 3);
     len = getline(buf, &n, stdin);
     if (len < 0)
         return 1;
