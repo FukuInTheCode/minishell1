@@ -24,7 +24,7 @@ static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
 int cmd_exec(char *cmd_buf, char *argv[], char ***envp)
 {
     if (!my_strcmp(*argv, "cd"))
-        return my_cd(argv, *envp);
+        return my_cd(argv, envp);
     if (!my_strcmp(*argv, "env"))
         return my_env(argv, *envp);
     if (!my_strcmp(*argv, "unsetenv"))
