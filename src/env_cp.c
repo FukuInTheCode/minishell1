@@ -21,8 +21,7 @@ char **my_env_cp(char **envp, uint8_t malloc_more)
     char **new_envp = malloc(sizeof(char *) * size);
 
     for (int i = 0; envp[i]; i++)
-        new_envp[i] = envp[i];
+        new_envp[i] = my_strdup(envp[i]);
     new_envp[size - 1] = NULL;
-    printf("vfnof\n");
     return new_envp;
 }
