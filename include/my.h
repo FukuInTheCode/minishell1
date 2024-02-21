@@ -40,6 +40,7 @@ bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
 bool do_exit(char *[], int *);
 char **my_env_cp(char **, uint8_t);
+int my_env_free(char **);
 
 int my_cd(char *[], char ***);
 int my_env(char *[], char **);
