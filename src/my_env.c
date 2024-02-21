@@ -7,9 +7,9 @@
 
 #include "my.h"
 
-int my_env(char *argv[], char ***envp)
+int my_env(char *argv[], char **envp)
 {
-    char **environ = *envp;
+    char **environ = envp;
 
     if (argv[1])
         return 1;
