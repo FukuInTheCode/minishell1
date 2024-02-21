@@ -62,7 +62,7 @@ static int change_env(char const *var, char const *value, char ***environ)
     return 0;
 }
 
-int my_setenv(char const *var, char const *value, char **environ)
+int my_setenv(char const *var, char const *value, char ***environ)
 {
     bool is_inside = false;
 
