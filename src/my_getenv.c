@@ -7,9 +7,7 @@
 
 #include "my.h"
 
-extern char **environ;
-
-char *my_getenv(char const *name)
+char *my_getenv(char const *name, char **environ)
 {
     size_t name_len = my_strlen(name);
 

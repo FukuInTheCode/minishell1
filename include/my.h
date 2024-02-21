@@ -34,7 +34,7 @@ char *my_strdup(char const *);
 int my_getnbr(char const *);
 
 int cmd_exec(char *, char *[], char ***);
-char *my_getenv(char const *);
+char *my_getenv(char const *, char **);
 bool cmd_exist(char const *, char[]);
 bool cmd_is_script(char const *);
 char **cmd_argv(char *, char *[]);
