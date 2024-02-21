@@ -31,7 +31,7 @@ int cmd_exec(char *cmd_buf, char *argv[], char ***envp)
         return my_unsetenv(argv[1], envp);
     if (!my_strcmp(*argv, "setenv") && argv[1])
         return my_setenv(argv[1], argv[2], envp);
-    if (cmd_exist(*argv, cmd_buf))
+    if (cmd_exist(*argv, cmd_buf, *envp))
         return run_cmd(cmd_buf, argv, *envp);
     if (cmd_is_script(*argv))
         return run_cmd(*argv, argv, *envp);
