@@ -26,7 +26,7 @@ static int get_input(char **buf, size_t n, int len)
     return 0;
 }
 
-int my_shell(void)
+int my_shell(char ***envp)
 {
     char *buf = NULL;
     char cmd_buf[1001] = {0};
@@ -41,7 +41,7 @@ int my_shell(void)
         cmd_argv(buf, argv);
         if (do_exit(argv, &error))
             break;
-        error = cmd_exec(cmd_buf, argv);
+        error = cmd_exec(cmd_buf, argv, envp);
         my_memset(cmd_buf, 0, my_strlen(cmd_buf));
         reset_argv(argv);
     }

@@ -26,9 +26,9 @@ static char *get_cmd_path(char buf[], char const *cmd, char const *tok)
     return buf;
 }
 
-bool cmd_exist(char const *cmd, char buf[])
+bool cmd_exist(char const *cmd, char buf[], char **environ)
 {
-    char *path_value = my_getenv("PATH");
+    char *path_value = my_getenv("PATH", environ);
     char current_dir[1001] = {0};
     int is_ok = 0;
 

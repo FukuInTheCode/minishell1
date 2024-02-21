@@ -7,10 +7,10 @@
 
 #include "my.h"
 
-extern char **environ;
-
-int my_env(char *argv[])
+int my_env(char *argv[], char **envp)
 {
+    char **environ = envp;
+
     if (argv[1])
         return 1;
     for (int i = 0; environ[i]; i++)
