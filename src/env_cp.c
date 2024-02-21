@@ -17,12 +17,12 @@ static size_t get_env_size(char **envp)
 
 char **my_env_cp(char **envp, uint8_t malloc_more)
 {
-    size_t size = get_env_size(envp) + 1 + malloc_more;
+    size_t size = get_env_size(envp) + 1;
     char **new_envp = malloc(sizeof(char *) * size);
 
-    for (size_t i = 0; i < size + 1; i++)
-        new_envp[i] = NULL;
     for (int i = 0; envp[i]; i++)
-        new_envp[i] = new_envp[i];
+        new_envp[i] = envp[i];
+    new_envp[size - 1] = NULL;
+    printf("vfnof\n");
     return new_envp;
 }
