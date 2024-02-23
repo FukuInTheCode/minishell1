@@ -14,7 +14,7 @@ char **cmd_argv(char *buf, char *argv[])
     buf = my_strdup(buf);
     if (!buf)
         return NULL;
-    for (char *tok = strtok(buf, " "); tok; tok = strtok(NULL, " ")) {
+    for (char *tok = strtok(buf, " \t"); tok; tok = strtok(NULL, " \t")) {
         argv[i] = my_strdup(tok);
         i++;
     }
