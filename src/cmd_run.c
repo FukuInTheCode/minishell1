@@ -26,13 +26,18 @@ static int handle_status(int status)
     return 128 + WTERMSIG(status);
 }
 
+static int run_exec(char const *cmd_buf, char *argv[], char **envp)
+{
+    return execve(cmd_buf, argv, envp)
+}
+
 static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
 {
     int status = 0;
     pid_t pid = fork();
 
     if (pid == 0)
-        return execve(cmd_buf, argv, envp);
+        return run_exec(cmd_buf, argv, envp);
     waitpid(pid, &status, 0);
     return handle_status(status);
 }
