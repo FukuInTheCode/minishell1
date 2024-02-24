@@ -28,7 +28,9 @@ static int handle_status(int status)
 
 static int run_exec(char const *cmd_buf, char *argv[], char **envp)
 {
-    return execve(cmd_buf, argv, envp)
+    if (execve(cmd_buf, argv, envp) == -1)
+        perror("exec");
+    return 0;
 }
 
 static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
