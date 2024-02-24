@@ -28,8 +28,14 @@ static int handle_status(int status)
 
 static int run_exec(char const *cmd_buf, char *argv[], char **envp)
 {
-    if (execve(cmd_buf, argv, envp) == -1)
-        perror("exec");
+    if (execve(cmd_buf, argv, envp) == -1) {
+        if (my_strstr(strerror(errno), "Exec format error")) {
+            write(2, cmd_buf, my_strlen(cmd_buf));
+            write(2, ": ", 2);
+            write(2, "Exec format error. Wrong Architecture.\n", 39);
+        } else
+            perror("exec");
+    }
     return 0;
 }
 
