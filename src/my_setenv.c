@@ -62,12 +62,14 @@ static int change_env(char const *var, char const *value, char ***environ)
     return 0;
 }
 
-int my_setenv(char const *var, char const *value, char ***environ)
+int my_setenv(char const *var, char *value, char ***environ)
 {
     bool is_inside = false;
 
-    if (!var || !value)
+    if (!var)
         return 84;
+    if (!value)
+        value = "";
     for (int i = 0; environ[i]; i++)
         if (!my_strncmp((*environ)[i], var, my_strlen(var)) &&
             (*environ)[i][my_strlen(var)] == '=')

@@ -45,7 +45,7 @@ int my_env_free(char **);
 int my_cd(char *[], char ***);
 int my_env(char *[], char **);
 int my_unsetenv(char const *, char ***);
-int my_setenv(char const *, char const *, char ***);
+int my_setenv(char const *, char *, char ***);
 
 int my_shell(char ***);
 
