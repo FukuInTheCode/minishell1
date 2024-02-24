@@ -6,6 +6,25 @@
 */
 
 #include "my.h"
+#include <signal.h>
+#include <stdlib.h>
+
+static int handle_status(int status)
+{
+    if (WTERMSIG(status) == SIGSEGV) {
+        write(2, "Segmentation fault", 18);
+        if (WCOREDUMP(status))
+            write(2, " (core dumped)", 14);
+        write(2, "\n", 1);
+    }
+    if (WTERMSIG(status) == SIGFPE) {
+        write(2, "Floating exception", 18);
+        if (WCOREDUMP(status))
+            write(2, " (core dumped)", 14);
+        write(2, "\n", 1);
+    }
+    return 128 + WTERMSIG(status);
+}
 
 static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
 {
@@ -15,10 +34,7 @@ static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
     if (pid == 0)
         return execve(cmd_buf, argv, envp);
     waitpid(pid, &status, 0);
-    status = status >> 8 * (status > 255);
-    if (status == 139)
-        write(2, "Segmentation fault (core dumped)\n", 34);
-    return status;
+    return handle_status(status);
 }
 
 int cmd_exec(char *cmd_buf, char *argv[], char ***envp)
