@@ -32,6 +32,7 @@ int my_strcmp(char const *, char const *);
 char *my_strcpy(char *, char const *);
 char *my_strdup(char const *);
 int my_getnbr(char const *);
+bool my_strstr(char const *, char const *);
 
 int cmd_exec(char *, char *[], char ***);
 char *my_getenv(char const *, char **);

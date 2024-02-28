@@ -26,13 +26,26 @@ static int handle_status(int status)
     return 128 + WTERMSIG(status);
 }
 
+static int run_exec(char const *cmd_buf, char *argv[], char **envp)
+{
+    if (execve(cmd_buf, argv, envp) == -1) {
+        if (my_strstr(strerror(errno), "Exec format error")) {
+            write(2, cmd_buf, my_strlen(cmd_buf));
+            write(2, ": ", 2);
+            write(2, "Exec format error. Wrong Architecture.\n", 39);
+        } else
+            perror("exec");
+    }
+    return 0;
+}
+
 static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
 {
     int status = 0;
     pid_t pid = fork();
 
     if (pid == 0)
-        return execve(cmd_buf, argv, envp);
+        return run_exec(cmd_buf, argv, envp);
     waitpid(pid, &status, 0);
     return handle_status(status);
 }
