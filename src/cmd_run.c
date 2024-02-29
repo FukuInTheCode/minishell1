@@ -26,15 +26,28 @@ static int handle_status(int status)
     return 128 + WTERMSIG(status);
 }
 
+static int check_exec_errno(char const *cmd_buf)
+{
+    if (my_strstr(strerror(errno), "Exec format error")) {
+        write(2, cmd_buf, my_strlen(cmd_buf));
+        write(2, ": ", 2);
+        write(2, "Exec format error. Wrong Architecture.\n", 39);
+        return 1;
+    }
+    if (my_strstr(strerror(errno), "Permission denied")) {
+        write(2, cmd_buf, my_strlen(cmd_buf));
+        write(2, ": ", 2);
+        write(2, "Permission denied\n", 18);
+        return 1;
+    }
+    perror("exec");
+    return 0;
+}
+
 static int run_exec(char const *cmd_buf, char *argv[], char **envp)
 {
     if (execve(cmd_buf, argv, envp) == -1) {
-        if (my_strstr(strerror(errno), "Exec format error")) {
-            write(2, cmd_buf, my_strlen(cmd_buf));
-            write(2, ": ", 2);
-            write(2, "Exec format error. Wrong Architecture.\n", 39);
-        } else
-            perror("exec");
+        return check_exec_errno(cmd_buf);
     }
     return 0;
 }
