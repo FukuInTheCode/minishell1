@@ -39,7 +39,7 @@ static int check_exec_errno(char const *cmd_buf)
     if (my_strstr(strerror(errno), "Permission denied")) {
         write(2, cmd_buf, my_strlen(cmd_buf));
         write(2, ": ", 2);
-        write(2, "Permission denied\n", 18);
+        write(2, "Permission denied.\n", 19);
         return 1;
     }
     perror("exec");
