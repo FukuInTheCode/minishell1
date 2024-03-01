@@ -40,9 +40,16 @@ static int add_env(char const *var, char const *value, char ***environ)
 
 static bool check_name(char const *var)
 {
-    for (int i = 0; var[i] ; i++)
-        if (!('0' <= var[i] && var[i] <= '9') && var[i] != '_')
-            return false;
+    if (!('a' <= *var && *var <= 'z') && !('A' <= *var && *var <= 'Z'))
+        return write(2, "setenv: Variable name "
+                "must begin with a letter.\n", 48), false;
+    for (int i = 0; var[i]; i++)
+        if (!('0' <= var[i] && var[i] <= '9')
+            && !('a' <= var[i] && var[i] <= 'z') &&
+            !('A' <= var[i] && var[i] <= 'Z')
+            && var[i] != '_')
+            return write(2, "setenv: Variable name must "
+                     "contain alphanumeric characters.\n", 60), false;
     return true;
 }
 
@@ -77,8 +84,7 @@ int my_setenv(char const *var, char *value, char ***environ)
     if (!var)
         return 84;
     if (!check_name(var))
-        return write(2, "setenv: Variable name must "
-                     "contain alphanumeric characters.\n", 60), 1;
+        return 1;
     if (!value)
         value = "";
     for (int i = 0; (*environ)[i]; i++)
