@@ -11,6 +11,8 @@
 
 static int handle_status(int status)
 {
+    if (!WIFSIGNALED(status))
+        return WEXITSTATUS(status);
     if (WTERMSIG(status) == SIGSEGV) {
         write(2, "Segmentation fault", 18);
         if (WCOREDUMP(status))
@@ -58,7 +60,7 @@ static int run_cmd(char const *cmd_buf, char *argv[], char **envp)
     pid_t pid = fork();
 
     if (pid == 0)
-        return run_exec(cmd_buf, argv, envp);
+        exit(run_exec(cmd_buf, argv, envp));
     waitpid(pid, &status, 0);
     return handle_status(status);
 }
